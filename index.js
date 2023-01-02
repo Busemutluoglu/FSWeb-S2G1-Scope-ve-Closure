@@ -53,6 +53,10 @@ function skor2() {
   return skor++;
 }
 
+//Skor 1 de let skor tanımlaması bir fonksiyon içerisinde yapılmış, skor 2 de ise globalde yapılmış. 
+//Bu tanımlamaların globalde olması ileride karışıklıga neden olabileceğinden her zaman ilgili fonksiyonun içerisinde yapılmalıdır.
+//closure kullanan skor1 kodu.
+
 
 /* Görev 2: takimSkoru() 
 Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
@@ -64,12 +68,15 @@ Aşağıdaki takimSkoru() fonksiyonununda aşağıdakileri yapınız:
 Not: Bu fonskiyon, aşağıdaki diğer görevler için de bir callback fonksiyonu olarak da kullanılacak
 */
 
-function takimSkoru(/*Kodunuzu buraya yazınız*/){
-    /*Kodunuzu buraya yazınız*/
+function takimSkoru(){
+
+  return Math.floor(Math.random() * 16 + 10);
+
+     
+    
 }
 
-
-
+console.log(takimSkoru());
 
 /* Görev 3: macSonucu() 
 Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
@@ -86,11 +93,24 @@ Aşağıdaki macSonucu() fonksiyonununda aşağıdakileri yapınız:
 }
 */ 
 
-function macSonucu(/*Kodunuzu buraya yazınız*/){
-  /*Kodunuzu buraya yazınız*/
+function macSonucu(callbackTakimSkoru, ceyrekSayisi){
+  
+  let macskoru = {
+    EvSahibi : 0,
+    KonukTakim : 0,
+  }
+
+  for (let i = 0; i<ceyrekSayisi; i++) {
+
+    macskoru.EvSahibi += callbackTakimSkoru();
+    macskoru.KonukTakim += callbackTakimSkoru();
+  }
+
+  return macskoru;
+  
+
 }
-
-
+console.log(macSonucu(takimSkoru, 4));
 
 
 
@@ -109,11 +129,19 @@ Aşağıdaki periyotSkoru() fonksiyonununda aşağıdakileri yapınız:
   */
 
 
-function periyotSkoru(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function periyotSkoru(callback) {
+  
+  let objetakimskoru = {
+    EvSahibi : 0,
+    KonukTakim : 0
+  }
 
+   objetakimskoru.EvSahibi = callback();
+   objetakimskoru.KonukTakim = callback();
+
+  return objetakimskoru;
 }
-
+console.log(periyotSkoru(takimSkoru));
 
 /* Zorlayıcı Görev 5: skorTabelasi() 
 Aşağıdaki skorTabelasi() fonksiyonunu kullanarak aşağıdakileri yapınız:
@@ -146,8 +174,23 @@ MAÇ UZAR ise skorTabelasi(periyotSkoru,takimSkoru,4)
 ] */
 // NOTE: Bununla ilgili bir test yoktur. Eğer logladığınız sonuçlar yukarıdakine benziyor ise tmamlandı sayabilirsiniz.
 
-function skorTabelasi(/*Kodunuzu buraya yazınız*/) {
-  /*Kodunuzu buraya yazınız*/
+function skorTabelasi(periyotSkoru, takimSkoru, ceyrekSayisi) {
+  
+  let array = [];
+  let EvSahibi = 0;
+  let KonukTakim = 0;
+
+  for (let i = 1; i <= ceyrekSayisi; i++) {
+    
+    let sonuc = periyotSkoru(takimSkoru);
+    EvSahibi += sonuc.EvSahibi;
+    KonukTakim += sonuc.KonukTakim;
+   
+    array[i-1] =  i + ". Periyot: Ev Sahibi " + sonuc.EvSahibi + " - Konuk Takım " + sonuc.KonukTakim;
+    
+    
+  }
+
 }
 
 
